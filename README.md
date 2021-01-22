@@ -19,5 +19,5 @@
 
 ### Ссылка на API
 
- <https://www.api.avalyshev.students.nomoreparties.co/>
- <https://api.avalyshev.students.nomoreparties.co/>
+ <https://api.alev.news.students.nomoredomains.monster/>
+ <https://www.api.alev.news.students.nomoredomains.monster/>

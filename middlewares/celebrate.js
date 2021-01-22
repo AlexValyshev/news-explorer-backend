@@ -29,13 +29,8 @@ const articlePost = {
     text: Joi.string().required(),
     date: Joi.string().required(),
     source: Joi.string().required(),
-    link: Joi.required().required().custom((value, helpers) => {
-      if (validator.isURL(value)) {
-        return value;
-      }
-      return helpers.message('Поле link должно быть ссылкой');
-    }),
-    image: Joi.required().required().custom((value, helpers) => {
+    link: Joi.string().required(),
+    image: Joi.required().custom((value, helpers) => {
       if (validator.isURL(value)) {
         return value;
       }

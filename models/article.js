@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const regex = /https?:\/\/[www.]?[a-z0-9.-]{1,}\.[a-z]{2,3}[a-z0-9/.-=]?#?/;
+const regex = /https?:\/\/[www.]?[a-z0-9.-_]{1,}\.[a-z]{2,3}[a-z0-9/.-=]?#?/;
 const articleSchema = new mongoose.Schema({
   keyword: {
     type: String,
