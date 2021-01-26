@@ -24,6 +24,7 @@ const signin = {
 
 const articlePost = {
   body: Joi.object().keys({
+    number: Joi.number().required(),
     keyword: Joi.string().required(),
     title: Joi.string().required(),
     text: Joi.string().required(),

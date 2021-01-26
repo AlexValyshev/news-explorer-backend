@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
-const regex = /https?:\/\/[www.]?[a-z0-9.-_]{1,}\.[a-z]{2,3}[a-z0-9/.-=]?#?/;
+const regex = /https?:\/\/[www.]?[a-z0-9.\-_]{1,}\.[a-z]{2,4}[a-z0-9/.\-=#_]{1,}/;
 const articleSchema = new mongoose.Schema({
+  number: {
+    type: Number,
+    required: true,
+  },
   keyword: {
     type: String,
     required: true,
@@ -38,7 +42,7 @@ const articleSchema = new mongoose.Schema({
       validator(v) {
         return regex.test(v);
       },
-      message: 'Введена неправильная ссылка',
+      message: 'Введена неправильная ссылка на image',
     },
     required: true,
   },

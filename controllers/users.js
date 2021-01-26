@@ -1,10 +1,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const User = require('../models/user.js');
-const { errorUser, errorRegister } = require('../configs/constants');
+const { UserNotFound, InvalidDataAuth } = require('../configs/constants');
 const ErrorNotFound = require('../errors/error-not-found');
 const ErrorData = require('../errors/error-data');
 const ErrorAuth = require('../errors/error-auth');
@@ -13,7 +12,7 @@ const getUserMe = (req, res, next) => {
   const userMeId = req.user._id;
   User.findById(userMeId)
     .orFail(() => {
-      throw new ErrorNotFound(errorUser);
+      throw new ErrorNotFound(UserNotFound);
     })
     .then((user) => {
       res.status(200).send({
@@ -29,12 +28,12 @@ const getUserMe = (req, res, next) => {
 const login = (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    throw new ErrorAuth(errorRegister);
+    throw new ErrorAuth(InvalidDataAuth);
   }
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new ErrorAuth(errorRegister);
+        throw new ErrorAuth(InvalidDataAuth);
       }
       return bcrypt.compare(password, user.password)
         .then((matched) => {
@@ -46,7 +45,7 @@ const login = (req, res, next) => {
             { expiresIn: '7d' });
             return res.send({ token });
           }
-          throw new ErrorAuth(errorRegister);
+          throw new ErrorAuth(InvalidDataAuth);
         });
     })
     .catch((err) => {
@@ -57,7 +56,7 @@ const login = (req, res, next) => {
 const createUser = (req, res, next) => {
   const { email, password, name } = req.body;
   if (!email || !password) {
-    throw new ErrorData(errorRegister);
+    throw new ErrorData(InvalidDataAuth);
   }
   User.create({ email, password, name })
     .then((user) => {
